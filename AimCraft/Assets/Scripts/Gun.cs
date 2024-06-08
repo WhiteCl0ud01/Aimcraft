@@ -22,6 +22,6 @@ public class Gun : MonoBehaviour
     {
         // Instantiate the bullet at the spawn point
         Quaternion bulletRotation = transform.rotation * Quaternion.Euler(0, 0, 90);
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletRotation);
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
     }
 }
