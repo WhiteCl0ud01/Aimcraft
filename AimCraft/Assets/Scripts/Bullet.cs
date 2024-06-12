@@ -22,7 +22,23 @@ public class Bullet : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // Destroy the bullet on impact
+        print("Attack Right!");
         Destroy(gameObject);
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        print("HIT1");
+        // Check if the bullet hits the target
+        if (other.CompareTag("Target"))
+        {
+            // Make the target disappear
+            Destroy(other.gameObject);
+
+            // Optionally, destroy the bullet as well upon collision
+            Destroy(gameObject);
+
+            print("HIT2");
+        }
     }
 }
 
