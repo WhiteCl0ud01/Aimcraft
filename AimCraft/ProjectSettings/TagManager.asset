@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Target
+  - Bullet
+  - FxTemporaire
+  - GamemodeNStart
   layers:
   - Default
   - TransparentFX
