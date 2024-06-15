@@ -5,7 +5,7 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     public float Health = 150;
-    public float lifetime = 1f;
+    public float lifetime = 1.5f;
 
     void Start()
     {
@@ -24,6 +24,7 @@ public class Target : MonoBehaviour
         }
         if (Health <= 0)
         {
+            print("Target destroyed");
             Destroy(gameObject);
         }
     }

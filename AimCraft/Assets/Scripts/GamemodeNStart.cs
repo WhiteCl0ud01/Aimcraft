@@ -6,8 +6,7 @@ using TMPro;
 public class GamemodeNStart : MonoBehaviour
 {
     public GameObject targetPrefab; // Assign your Target prefab in the Inspector
-    public float spawnInterval = 2f; // Interval between each spawn
-    public float spawnChance = 0.5f; // Probability of spawning a target each interval
+    public float spawnInterval = 1f; // Interval between each spawn
 
     private float nextSpawnTime;
 

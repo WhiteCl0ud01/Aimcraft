@@ -47,7 +47,15 @@ public class Gun : MonoBehaviour
                 GamemodeNStart start = hitinfo.collider.GetComponentInParent<GamemodeNStart>(); //get the parent of the object
                 start.pressStart(); //perform pressStart function
             }
-
+            //for demo
+            if (hitinfo.collider.gameObject.tag == "Demo")
+            {
+                TargetDemo targetDemo = hitinfo.collider.GetComponentInParent<TargetDemo>(); //get the parent of the object
+                if (targetDemo != null)
+                {
+                    targetDemo.OnHit(hitinfo.collider.gameObject.name); //perform onHit function
+                }
+            }
         }
     }
 
