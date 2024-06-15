@@ -5,6 +5,13 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     public float Health = 150;
+    public float lifetime = 1f;
+
+    void Start()
+    {
+        Destroy(gameObject,lifetime);
+    }
+
     public void OnHit(string bodyparts)
     {
         if(bodyparts == "BodyHitbox")
@@ -22,3 +29,4 @@ public class Target : MonoBehaviour
     }
 
 }
+

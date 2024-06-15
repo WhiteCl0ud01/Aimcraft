@@ -26,12 +26,6 @@ public class GamemodeNStart : MonoBehaviour
         if (spawn && Time.time >= nextSpawnTime)
         {
             SpawnTarget();
-            // Check if we should spawn a target
-            if (Random.value < spawnChance)
-            {
-                SpawnTarget();
-            }
-
             // Schedule the next spawn time
             nextSpawnTime = Time.time + spawnInterval;
         }
@@ -84,6 +78,5 @@ public class GamemodeNStart : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0f, 180f, 0f);
         GameObject newTarget = Instantiate(targetPrefab, randomPosition, targetRotation);
 
-        // Optionally, you can set up additional behaviors or configurations for the spawned target here
     }
 }
