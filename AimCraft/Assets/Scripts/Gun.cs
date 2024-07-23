@@ -26,7 +26,7 @@ public class Gun : MonoBehaviour
         RaycastHit hitinfo;
         bool hit = Physics.Raycast(ray, out hitinfo, 20f); //perform the raycast
 
-        //Debug.DrawRay(bulletSpawnPoint.position, ray.direction * 100, Color.red, 2.0f);//for debugging the ray
+        //Debug.DrawRay(muzzleSpawnPoint.position, ray.direction * 100, Color.red, 2.0f);//for debugging the ray
 
         GameObject tempFlash = Instantiate(muzzleFlashPrefab, muzzleSpawnPoint.position, muzzleSpawnPoint.rotation); //Spawning the muzzle flash at the muzzle spawnpoint
         Destroy(tempFlash, 0.15f); //Destroy the muzzle flash effect
@@ -55,6 +55,13 @@ public class Gun : MonoBehaviour
                 {
                     targetDemo.OnHit(hitinfo.collider.gameObject.name); //perform onHit function
                 }
+            }
+
+            if (hitinfo.collider.gameObject.tag == "Timer") //check if the object hitted has a tag named "Timer"
+            {
+                GamemodeNStart start = hitinfo.collider.GetComponentInParent<GamemodeNStart>();
+                start.changeTimer(hitinfo.collider.gameObject.name);
+                print(hitinfo.collider.gameObject.name);
             }
         }
     }

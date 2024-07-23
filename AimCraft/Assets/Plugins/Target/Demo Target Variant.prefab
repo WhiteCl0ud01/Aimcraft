@@ -1,17 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1652283985481485776
+--- !u!114 &774311333361774482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8048579929428549956}
+  m_GameObject: {fileID: 8256279280141516356}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47ba58153920ef840a579fa8851a093d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 150
+  lifetime: 1.5
 --- !u!1001 &3657278530919892124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19,6 +21,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4635735845027199704, guid: 53cdd6ed9f2fb5747ac8fcbd98105612,
+        type: 3}
+      propertyPath: m_Name
+      value: Demo Target Variant
+      objectReference: {fileID: 0}
     - target: {fileID: 6212960961028538210, guid: 53cdd6ed9f2fb5747ac8fcbd98105612,
         type: 3}
       propertyPath: m_RootOrder
@@ -81,10 +88,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5886880288541451852, guid: 53cdd6ed9f2fb5747ac8fcbd98105612, type: 3}
+    - {fileID: 4635735845027199707, guid: 53cdd6ed9f2fb5747ac8fcbd98105612, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 53cdd6ed9f2fb5747ac8fcbd98105612, type: 3}
---- !u!1 &8048579929428549956 stripped
+--- !u!1 &8256279280141516356 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6733743181261301208, guid: 53cdd6ed9f2fb5747ac8fcbd98105612,
+  m_CorrespondingSourceObject: {fileID: 4635735845027199704, guid: 53cdd6ed9f2fb5747ac8fcbd98105612,
     type: 3}
   m_PrefabInstance: {fileID: 3657278530919892124}
   m_PrefabAsset: {fileID: 0}
