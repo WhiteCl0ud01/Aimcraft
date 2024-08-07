@@ -692,7 +692,7 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-    Collab: 1
+    Collab: 0
     UNet: 1
   luminIcon:
     m_Name: 
@@ -706,9 +706,9 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 82d02439-20b0-4685-8c94-952b84245ce3
+  cloudProjectId: 0ff492d0-0547-4d73-87a1-afd684d97ed0
   framebufferDepthMemorylessMode: 0
-  projectName: AimCraft 2024-05-24_15-53-45
+  projectName: AimCraft
   organizationId: rmanbayjm
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 1

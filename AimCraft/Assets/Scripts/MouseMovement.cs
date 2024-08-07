@@ -13,6 +13,32 @@ public class MouseMovement : MonoBehaviour
 
     public float sens;
     public float dpi = 800;
+
+    private Sensitivity sensitivity;
+
+    void Start()
+    {
+        GameObject sensitivityObject = GameObject.Find("Sensitivity Panel");
+
+        if (sensitivityObject != null)
+        {
+            sensitivity = sensitivityObject.GetComponent<Sensitivity>();
+
+            if (sensitivity != null)
+            {
+                sens = sensitivity.GetSensitivity();
+                Debug.Log("Sensitivity Value: " + sens);
+            }
+            else
+            {
+                Debug.LogError("Sensitivity component not found on the GameObject.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Sensitivity GameObject not found.");
+        }
+    }
     private void OnEnable()
     {
         lookRef.action.Enable();
@@ -26,6 +52,8 @@ public class MouseMovement : MonoBehaviour
 
     private void Update()
     {
+;
+        sens = Mathf.Max(sensitivity.GetSensitivity(), 0.01f);
         float inchesPer360 = (14.2857f * 360f) / (sens * dpi);
 
         float conversion = 360f / (inchesPer360 * dpi * sens);

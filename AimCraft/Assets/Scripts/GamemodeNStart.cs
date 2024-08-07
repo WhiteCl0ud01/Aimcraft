@@ -13,10 +13,12 @@ public class GamemodeNStart : MonoBehaviour
     private float timer; // Timer variable to track elapsed time
     private int score; // Score variable to track the number of target hitted
     private int missed; // Score variable to track the number of target missed
+    private float hitRate; // Score variable to track the hit rate
     public TextMeshProUGUI timerText; //Timer text
     public TextMeshPro timeSelectedText; //Time selected text
     public TextMeshProUGUI scoreText; //Score text
     public TextMeshProUGUI missedText; //Missed text
+    public TextMeshProUGUI hitRateText; //Hit Rate text
     public TextMeshPro startStopText; //Start and Stop text
 
     public bool spawn = false;
@@ -47,6 +49,7 @@ public class GamemodeNStart : MonoBehaviour
             UpdateTimerDuration();
             UpdateTimerText();
             UpdateStartStopText();
+
             
         }
     }
@@ -62,6 +65,7 @@ public class GamemodeNStart : MonoBehaviour
             missed = 0;
             UpdateScoreText();
             UpdateMissedText();
+            UpdateHitRateText();
         }
     }
     void UpdateTimerDuration()
@@ -91,6 +95,19 @@ public class GamemodeNStart : MonoBehaviour
         missedText.text = "Missed: " + missed; // Display missed score
 
     }
+    void UpdateHitRateText()
+    {
+        int total = score + missed;
+        if (total == 0)
+        {
+            hitRateText.text = "Hit Rate: 0.00%"; // Display hit rate
+        }
+        else {
+
+            hitRate = (score / (float)total) * 100;
+            hitRateText.text = $"Hit Rate: {hitRate:F2}%"; // Display hit rate
+        }
+    }
     void UpdateStartStopText()
     {
         if (spawn)
@@ -118,11 +135,13 @@ public class GamemodeNStart : MonoBehaviour
     {
         score += 1;
         UpdateScoreText();
+        UpdateHitRateText();
     }
     public void missTarget()
     {
         missed += 1;
         UpdateMissedText();
+        UpdateHitRateText();
     }
     public void changeTimer(string timing)
     {

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Gun : MonoBehaviour
 {
@@ -9,17 +11,48 @@ public class Gun : MonoBehaviour
     public Camera gameCamera;
     public Transform muzzleSpawnPoint;
     public GameObject muzzleFlashPrefab;
+    public GameObject impactPrefab;
+    public TextMeshProUGUI ammoText;
+    private int ammoCount = 30;
+    private int maxAmmoCount = 30;
+    public AudioClip gunShot;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        // Get the AudioSource component
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
-        if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
+        if (ammoCount <= 0)
         {
-            Shoot();
-            nextFireTime = Time.time + fireRate;
+            StartCoroutine(Reload());
+        }
+        else
+        {
+            if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
+            {
+                Shoot();
+                ammoText.text = ammoCount + "/" + maxAmmoCount;
+                nextFireTime = Time.time + fireRate;
+            }
         }
     }
+
+    IEnumerator Reload()
+    {
+        ammoText.text = "Reloading";
+        yield return new WaitForSeconds(1.5f);
+        ammoCount = maxAmmoCount; 
+        ammoText.text = ammoCount + "/" +maxAmmoCount;
+    }
+
     void Shoot()
     {
+        audioSource.PlayOneShot(gunShot);
+        ammoCount -= 1;
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0); //position of the center of the screen
         Ray ray = gameCamera.ScreenPointToRay(screenCenter); //pointing the ray to the center of the screen
 
@@ -40,6 +73,8 @@ public class Gun : MonoBehaviour
                 if (target != null)
                 {
                     target.OnHit(hitinfo.collider.gameObject.name); //perform onHit function
+                    GameObject impactInstance = Instantiate(impactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                    Destroy(impactInstance, 0.2f);
                 }
             }
             if (hitinfo.collider.gameObject.tag == "GamemodeNStart") //check if the object hitted has a tag named "GamemodeNStart"
@@ -54,6 +89,8 @@ public class Gun : MonoBehaviour
                 if (targetDemo != null)
                 {
                     targetDemo.OnHit(hitinfo.collider.gameObject.name); //perform onHit function
+                    GameObject impactInstance = Instantiate(impactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                    Destroy(impactInstance, 0.3f);
                 }
             }
 
@@ -61,6 +98,12 @@ public class Gun : MonoBehaviour
             {
                 GamemodeNStart start = hitinfo.collider.GetComponentInParent<GamemodeNStart>();
                 start.changeTimer(hitinfo.collider.gameObject.name);
+                print(hitinfo.collider.gameObject.name);
+            }
+            if (hitinfo.collider.gameObject.tag == "Sensitivity") //check if the object hitted has a tag named "Sensitivity"
+            {
+                Sensitivity sensitivityobject = hitinfo.collider.GetComponentInParent<Sensitivity>();
+                sensitivityobject.changeSens(hitinfo.collider.gameObject.name);
                 print(hitinfo.collider.gameObject.name);
             }
         }

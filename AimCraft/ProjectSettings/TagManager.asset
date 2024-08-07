@@ -10,6 +10,7 @@ TagManager:
   - GamemodeNStart
   - Demo
   - Timer
+  - Sensitivity
   layers:
   - Default
   - TransparentFX
