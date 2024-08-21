@@ -21,6 +21,9 @@ public class GamemodeNStart : MonoBehaviour
     public TextMeshProUGUI hitRateText; //Hit Rate text
     public TextMeshPro startStopText; //Start and Stop text
 
+    private string gamemodeType;
+
+
     public bool spawn = false;
     void Start()
     {
