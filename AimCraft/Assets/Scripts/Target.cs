@@ -17,8 +17,15 @@ public class Target : MonoBehaviour
     void Update()
     {
         lifetime -= Time.deltaTime;
-        if (lifetime <= 0 || !gamePanelScript.spawn)
+        if (lifetime <= 0)
         {
+            if (gamePanelScript.gamemodeType != "Survival")
+            {
+                gamePanelScript.missTarget();
+                Destroy(gameObject);
+            }
+        }
+        if (!gamePanelScript.spawn){
             gamePanelScript.missTarget();
             Destroy(gameObject);
         }
