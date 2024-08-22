@@ -28,10 +28,16 @@ public class GamemodeNStart : MonoBehaviour
     private float[] xPosRange = new float[] { -4f, 4f };
     private float[] zPosRange = new float[] { -6f, 9f };//  9toward the back wall
     public bool spawn = false; //spawning started
+    public GameObject Obstacles;
+    public GameObject audioSourceOrigin;
+    public AudioSource audioSource;
+    public AudioClip killEffect;
     void Start()
     {
         nextSpawnTime = Time.time + spawnInterval;
         gamemodeType = "Flick";
+        Obstacles.SetActive(false);
+        audioSource = audioSourceOrigin.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -189,6 +195,7 @@ public class GamemodeNStart : MonoBehaviour
     }
     public void hitTarget()
     {
+        audioSource.PlayOneShot(killEffect);
         score += 1;
         UpdateScoreText();
         UpdateHitRateText();
@@ -241,6 +248,7 @@ public class GamemodeNStart : MonoBehaviour
         UpdateGameModeText();
         if (gamemode == "Survival")
         {
+            Obstacles.SetActive(false);
             UpdateGameModeText();
             changeTimer("");
             UpdateMissedText();
@@ -254,7 +262,8 @@ public class GamemodeNStart : MonoBehaviour
         }
         else if (gamemode == "Precision")
         {
-            changeTimer(setTime.ToString()+"Second");
+            Obstacles.SetActive(true);
+            changeTimer(setTime.ToString() + "Second");
             xPosRange[0] = -4f;
             xPosRange[1] = 4f;
             zPosRange[0] = 8f;
@@ -262,6 +271,7 @@ public class GamemodeNStart : MonoBehaviour
         }
         else if (gamemode == "Flick")
         {
+            Obstacles.SetActive(false);
             changeTimer(setTime.ToString() + "Second");
             xPosRange[0] = -4f;
             xPosRange[1] = 4f;

@@ -11,14 +11,19 @@ public class Gun : MonoBehaviour
     public Camera gameCamera;
     public Transform muzzleSpawnPoint;
     public GameObject muzzleFlashPrefab;
-    public GameObject impactPrefab;
+    public GameObject woodImpactPrefab;
+    public GameObject stoneImpactPrefab;
+    public GameObject bodyImpactPrefab;
     public TextMeshProUGUI ammoText;
     private int ammoCount = 30;
     private int maxAmmoCount = 30;
     public AudioClip gunShot;
+    public AudioClip reloading;
     private AudioSource audioSource;
     private bool infiniteBullet = false;
     public TextMeshPro infiniteBulletText;
+    public TextMeshPro infiniteBulletSelectorText;
+    private bool isReloading = false;
     void Start()
     {
         // Get the AudioSource component
@@ -30,9 +35,10 @@ public class Gun : MonoBehaviour
         if (!infiniteBullet)
         {
             ammoText.text = ammoCount + "/" + maxAmmoCount;
-            if (ammoCount <= 0)
+            if (ammoCount <= 0 && !isReloading)
             {
                 StartCoroutine(Reload());
+                audioSource.PlayOneShot(reloading);
             }
             else
             {
@@ -53,23 +59,27 @@ public class Gun : MonoBehaviour
             }
         }
     }
-
     IEnumerator Reload()
     {
+        isReloading = true;
         ammoText.text = "Reloading";
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.6f);
         ammoCount = maxAmmoCount; 
         ammoText.text = ammoCount + "/" +maxAmmoCount;
+        isReloading = false;
     }
     void UpdateONOFFText()
     {
+        
         if (infiniteBullet)
         {
-            infiniteBulletText.text = "OFF";
+            infiniteBulletText.text = "Infinite Bullet ON";
+            infiniteBulletSelectorText.text = "OFF";
         }
         else
         {
-            infiniteBulletText.text = "ON";
+            infiniteBulletText.text = "Infinite Bullet OFF";
+            infiniteBulletSelectorText.text = "ON";
         }
     }
     void Shoot()
@@ -90,19 +100,39 @@ public class Gun : MonoBehaviour
 
         if (hit) //if it hits something
         {
-            if(hitinfo.collider.gameObject.tag == "Target") //check if the object hitted has a tag named "Target"
+            if (hitinfo.collider.gameObject.tag == "Wood") //check if the object hitted has a tag named "Wood"
+            {
+                GameObject impactInstance = Instantiate(woodImpactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                Destroy(impactInstance, 0.2f);
+
+            }
+            if (hitinfo.collider.gameObject.tag == "Obstacle") //check if the object hitted has a tag named "Obstacle"
+            {
+                GameObject impactInstance = Instantiate(woodImpactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                Destroy(impactInstance, 0.2f);
+
+            }
+            if (hitinfo.collider.gameObject.tag == "Stone") //check if the object hitted has a tag named "Stone"
+            {
+                GameObject impactInstance = Instantiate(stoneImpactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                Destroy(impactInstance, 0.2f);
+
+            }
+            if (hitinfo.collider.gameObject.tag == "Target") //check if the object hitted has a tag named "Target"
             {
                 Target target = hitinfo.collider.GetComponentInParent<Target>(); //get the parent of the object
                 if (target != null)
                 {
                     target.OnHit(hitinfo.collider.gameObject.name); //perform onHit function
-                    GameObject impactInstance = Instantiate(impactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                    GameObject impactInstance = Instantiate(bodyImpactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
                     Destroy(impactInstance, 0.2f);
                 }
             }
             if (hitinfo.collider.gameObject.tag == "GamemodeNStart") //check if the object hitted has a tag named "GamemodeNStart"
             {
                 GamemodeNStart start = hitinfo.collider.GetComponentInParent<GamemodeNStart>(); //get the parent of the object
+                GameObject impactInstance = Instantiate(woodImpactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                Destroy(impactInstance, 0.2f);
                 if (hitinfo.collider.gameObject.name == "Start")
                 {
                     start.pressStart(); //perform pressStart function
@@ -119,25 +149,31 @@ public class Gun : MonoBehaviour
                 if (targetDemo != null)
                 {
                     targetDemo.OnHit(hitinfo.collider.gameObject.name); //perform onHit function
-                    GameObject impactInstance = Instantiate(impactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                    GameObject impactInstance = Instantiate(bodyImpactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
                     Destroy(impactInstance, 0.3f);
                 }
             }
 
             if (hitinfo.collider.gameObject.tag == "Timer") //check if the object hitted has a tag named "Timer"
             {
+                GameObject impactInstance = Instantiate(woodImpactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                Destroy(impactInstance, 0.2f);
                 GamemodeNStart start = hitinfo.collider.GetComponentInParent<GamemodeNStart>();
                 start.changeTimer(hitinfo.collider.gameObject.name);
                 print(hitinfo.collider.gameObject.name);
             }
             if (hitinfo.collider.gameObject.tag == "Sensitivity") //check if the object hitted has a tag named "Sensitivity"
             {
+                GameObject impactInstance = Instantiate(woodImpactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                Destroy(impactInstance, 0.2f);
                 Sensitivity sensitivityobject = hitinfo.collider.GetComponentInParent<Sensitivity>();
                 sensitivityobject.changeSens(hitinfo.collider.gameObject.name);
                 print(hitinfo.collider.gameObject.name);
             }
             if (hitinfo.collider.gameObject.tag == "Bullet") //check if the object hitted has a tag named "Bullet"
             {
+                GameObject impactInstance = Instantiate(woodImpactPrefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal));
+                Destroy(impactInstance, 0.2f);
                 infiniteBullet = !infiniteBullet;
                 ammoCount = 30;
                 UpdateONOFFText();
