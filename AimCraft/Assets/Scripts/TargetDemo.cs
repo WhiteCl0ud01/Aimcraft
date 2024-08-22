@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TargetDemo : MonoBehaviour
 {
-
+    public TextMeshPro demoText;
     void Start()
     {
     }
@@ -13,11 +14,11 @@ public class TargetDemo : MonoBehaviour
     {
         if (bodyparts == "BodyHitbox")
         {
-            print("Hit 40");
+            demoText.text = "Body shot deals 40 damage which needs 4 shots to kill the target";
         }
         else if (bodyparts == "HeadHitbox")
         {
-            print("Hit 150");
+            demoText.text = "Headshot deals 150 damage which kills the target instantly";
         }
     }
 }

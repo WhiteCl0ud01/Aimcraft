@@ -35,10 +35,13 @@ public class Gun : MonoBehaviour
         if (!infiniteBullet)
         {
             ammoText.text = ammoCount + "/" + maxAmmoCount;
-            if (ammoCount <= 0 && !isReloading)
+            if (ammoCount <= 0)
             {
-                StartCoroutine(Reload());
-                audioSource.PlayOneShot(reloading);
+                if (!isReloading)
+                {
+                    StartCoroutine(Reload());
+                    audioSource.PlayOneShot(reloading);
+                }
             }
             else
             {
