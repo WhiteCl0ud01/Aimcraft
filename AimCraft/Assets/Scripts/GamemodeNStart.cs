@@ -29,6 +29,7 @@ public class GamemodeNStart : MonoBehaviour
     private float[] zPosRange = new float[] { -6f, 9f };//  9toward the back wall
     public bool spawn = false; //spawning started
     public GameObject Obstacles;
+    public GameObject Options;
     public GameObject audioSourceOrigin;
     public AudioSource audioSource;
     public AudioClip killEffect;
@@ -88,6 +89,7 @@ public class GamemodeNStart : MonoBehaviour
         UpdateStartStopText();
         UpdateTimerDuration();
         UpdateTimerText();
+        Options.SetActive(true);
         if (spawn) // if the game starting/restarting change the score text to 0;
         {
             score = 0;
@@ -96,6 +98,7 @@ public class GamemodeNStart : MonoBehaviour
             UpdateScoreText();
             UpdateMissedText();
             UpdateHitRateText();
+            Options.SetActive(false);
         }
     }
     void UpdateTimerDuration()
