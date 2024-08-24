@@ -74,8 +74,8 @@ public class GamemodeNStart : MonoBehaviour
             UpdateTimerDuration();
             UpdateTimerText();
             UpdateStartStopText();
+            Options.SetActive(true);
 
-            
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
