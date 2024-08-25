@@ -23,6 +23,7 @@ public class GamemodeNStart : MonoBehaviour
     public TextMeshPro startStopText; //Start and Stop text
     public TextMeshPro gamemodeText;
     public string gamemodeType;
+    public string prevgamemodeType;
     private float timePassed;
     //spawn pointrange
     private float[] xPosRange = new float[] { -4f, 4f };
@@ -100,6 +101,12 @@ public class GamemodeNStart : MonoBehaviour
             UpdateHitRateText();
             Options.SetActive(false);
         }
+        else //Stopping the game
+        {
+            UpdateScoreText();
+            UpdateMissedText();
+            UpdateHitRateText();
+        }
     }
     void UpdateTimerDuration()
     {
@@ -149,7 +156,7 @@ public class GamemodeNStart : MonoBehaviour
             else
             {
                 hitRate = (score / (float)timePassed);
-                if (hitRate > 0)
+                if (hitRate > 0 && timePassed > 0)
                 {
                     hitRateText.text = $"Target Hit Per Second: {hitRate:F2}";
                 }
@@ -210,9 +217,12 @@ public class GamemodeNStart : MonoBehaviour
     }
     public void missTarget()
     {
-        missed += 1;
-        UpdateMissedText();
-        UpdateHitRateText();
+        if (gamemodeType != "Survival")
+        {
+            missed += 1;
+            UpdateMissedText();
+            UpdateHitRateText();
+        }
         NoOfTargetOnMap -= 1;
     }
     public void changeTimer(string timing)
@@ -267,6 +277,8 @@ public class GamemodeNStart : MonoBehaviour
         {
             Obstacles.SetActive(true);
             changeTimer(setTime.ToString() + "Second");
+            UpdateMissedText();
+            UpdateHitRateText();
             xPosRange[0] = -4f;
             xPosRange[1] = 4f;
             zPosRange[0] = 8f;
@@ -276,6 +288,8 @@ public class GamemodeNStart : MonoBehaviour
         {
             Obstacles.SetActive(false);
             changeTimer(setTime.ToString() + "Second");
+            UpdateMissedText();
+            UpdateHitRateText();
             xPosRange[0] = -4f;
             xPosRange[1] = 4f;
             zPosRange[0] = -6f;
